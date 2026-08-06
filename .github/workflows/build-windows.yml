@@ -4,12 +4,11 @@ name: Build Windows EXE
 on: [push]
 
 jobs:
-build:
+  build:
   runs-on: windows-latest
   steps:
-    - name: Checkout from Gitee
-      run: |
-        git clone https://gitee.com/qzw2015/my-comfyui-app.git .
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Setup Python
       uses: actions/setup-python@v5
