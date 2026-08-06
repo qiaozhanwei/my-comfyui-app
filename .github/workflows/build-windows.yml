@@ -1,36 +1,35 @@
-# .github/workflows/build-windows.yml
 name: Build Windows EXE
 
 on: [push]
 
 jobs:
   build:
-  runs-on: windows-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.13'
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-    - name: Install dependencies
-      run: |
-        pip install torch numpy gradio requests nuitka
+      - name: Install dependencies
+        run: |
+          pip install torch numpy gradio requests nuitka
 
-    - name: Build EXE
-      run: |
-        nuitka --standalone --onefile --windows-disable-console `
-          --include-package=comfy `
-          --include-data-dir=comfyui_src=comfyui_src `
-          --include-data-dir=workflows=workflows `
-          --output-dir=dist `
-          --output-filename=MyComfyUIApp.exe `
-          main.py
+      - name: Build EXE
+        run: |
+          nuitka --standalone --onefile --windows-disable-console `
+            --include-package=comfy `
+            --include-data-dir=comfyui_src=comfyui_src `
+            --include-data-dir=workflows=workflows `
+            --output-dir=dist `
+            --output-filename=MyComfyUIApp.exe `
+            main.py
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: MyComfyUIApp
-        path: dist/MyComfyUIApp.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyComfyUIApp
+          path: dist/MyComfyUIApp.exe
