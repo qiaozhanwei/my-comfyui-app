@@ -4,6 +4,8 @@ __pycache__/
 /input/
 !/input/example.png
 /models/
+!models/.gitkeep
+!models/**/*.gitkeep
 /temp/
 /custom_nodes/
 !custom_nodes/example_node.py.example

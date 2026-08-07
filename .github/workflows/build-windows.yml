@@ -34,7 +34,6 @@ jobs:
             --include-package=comfy_config `
             --include-package=comfy_execution `
             --include-package=comfy_extras `
-            --include-data-dir=comfyui_src\models=comfyui_src\models `
             --include-data-dir=workflows=workflows `
             --output-dir=dist `
             --output-filename=MyComfyUIApp.exe `

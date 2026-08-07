@@ -1,0 +1,26 @@
+# 模型文件太大，不纳入 Git（仅忽略 models 目录下的模型文件，不忽略目录本身）
+comfyui_src/models/*.safetensors
+comfyui_src/models/*.ckpt
+comfyui_src/models/*.pt
+comfyui_src/models/**/*.safetensors
+comfyui_src/models/**/*.ckpt
+comfyui_src/models/**/*.pt
+
+# ComfyUI 输出
+comfyui_src/output/
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 打包产物
+dist/
+build/
+*.egg-info/

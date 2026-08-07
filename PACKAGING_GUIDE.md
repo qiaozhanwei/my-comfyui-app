@@ -744,7 +744,6 @@ jobs:
             --include-package=comfy_config `
             --include-package=comfy_execution `
             --include-package=comfy_extras `
-            --include-data-dir=comfyui_src\models=comfyui_src\models `
             --include-data-dir=workflows=workflows `
             --output-dir=dist `
             --output-filename=MyComfyUIApp.exe `
@@ -910,7 +909,6 @@ nuitka --standalone --onefile --windows-console-mode=disable `
     --include-package=comfy_config `
     --include-package=comfy_execution `
     --include-package=comfy_extras `
-    --include-data-dir=comfyui_src\models=comfyui_src\models `
     --include-data-dir=workflows=workflows `
     --output-dir=dist `
     --output-filename=MyComfyUIApp.exe `
@@ -944,7 +942,6 @@ nuitka --standalone --onefile --windows-console-mode=disable `
 | `--include-package=comfy_config` | 强制包含 comfy_config 包 |
 | `--include-package=comfy_execution` | 强制包含 comfy_execution 包 |
 | `--include-package=comfy_extras` | 强制包含 comfy_extras 包 |
-| `--include-data-dir=comfyui_src\models=...` | 包含模型目录（用户需自行放置模型文件） |
 | `--include-data-dir=workflows=workflows` | 包含工作流文件目录 |
 | `--output-dir=dist` | 输出目录 |
 | `--output-filename=MyComfyUIApp.exe` | 输出文件名 |
