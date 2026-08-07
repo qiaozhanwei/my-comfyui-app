@@ -48,8 +48,22 @@ C:\ComfyUI-Installs\ComfyUI\ComfyUI
 
 1. 启动 ComfyUI，在浏览器中打开 `http://127.0.0.1:8188`
 2. 加载你的工作流
-3. 点击右上角 **"Save (API Format)"** 按钮（或 `Workflow` → `Export (API)`）
-4. 保存为 `workflow_api.json`
+3. 点击左上角的 **"图形"** 下拉菜单
+4. 选择 **"导出 (API)"**
+5. 保存为 `workflow_api.json`
+
+```
+图形 ▼
+├── 重命名
+├── 复制
+├── 添加到书签
+├── 保存
+├── 另存为
+── 导出
+├── 导出 (API)  ← 选这个！
+├── 清除工作流
+└── 删除工作流
+```
 
 > **重要**：必须导出为 API 格式，否则无法通过 API 调用。
 
@@ -707,10 +721,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
@@ -731,7 +745,7 @@ jobs:
           Write-Host "Build successful: $(Get-Item dist\MyComfyUIApp.exe | Select-Object -ExpandProperty Length) bytes"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: MyComfyUIApp
           path: dist/MyComfyUIApp.exe
@@ -837,7 +851,7 @@ MODEL_DOWNLOAD_URLS = {
 
 ## 八、Windows 本地打包
 
-如果不想用 GitHub Actions（编译慢、需要上传代码），可以在 Windows 上本地打包。
+> **注意**：打包 Windows `.exe` **必须在 Windows 环境下进行**。Nuitka 不支持跨平台编译，macOS/Linux 上无法生成 `.exe`。如果没有 Windows 机器，请使用 [第六节 GitHub Actions](#六github-actions-自动打包)。
 
 ### 8.1 环境准备
 
