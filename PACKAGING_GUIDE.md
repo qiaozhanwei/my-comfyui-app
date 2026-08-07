@@ -736,7 +736,19 @@ jobs:
       - name: Build EXE
         shell: pwsh
         run: |
-          nuitka --standalone --onefile --windows-disable-console --include-package=comfy --include-data-dir=comfyui_src=comfyui_src --include-data-dir=workflows=workflows --output-dir=dist --output-filename=MyComfyUIApp.exe main.py
+          $env:PYTHONPATH = "$env:PYTHONPATH;comfyui_src"
+          nuitka --standalone --onefile --windows-console-mode=disable `
+            --include-package=comfy `
+            --include-package=comfy_api `
+            --include-package=comfy_api_nodes `
+            --include-package=comfy_config `
+            --include-package=comfy_execution `
+            --include-package=comfy_extras `
+            --include-data-dir=comfyui_src\models=comfyui_src\models `
+            --include-data-dir=workflows=workflows `
+            --output-dir=dist `
+            --output-filename=MyComfyUIApp.exe `
+            main.py
           if (-not (Test-Path "dist\MyComfyUIApp.exe")) {
             Write-Error "Build failed: MyComfyUIApp.exe not found in dist/"
             Get-ChildItem dist -ErrorAction SilentlyContinue
@@ -889,12 +901,16 @@ cd ..
 # 4. 安装打包工具
 pip install nuitka
 
-# 5. 执行打包
-nuitka --standalone `
-    --onefile `
-    --windows-disable-console `
+# 5. 执行打包（设置 PYTHONPATH 让 Nuitka 找到 comfyui_src 下的包）
+$env:PYTHONPATH = "$env:PYTHONPATH;comfyui_src"
+nuitka --standalone --onefile --windows-console-mode=disable `
     --include-package=comfy `
-    --include-data-dir=comfyui_src=comfyui_src `
+    --include-package=comfy_api `
+    --include-package=comfy_api_nodes `
+    --include-package=comfy_config `
+    --include-package=comfy_execution `
+    --include-package=comfy_extras `
+    --include-data-dir=comfyui_src\models=comfyui_src\models `
     --include-data-dir=workflows=workflows `
     --output-dir=dist `
     --output-filename=MyComfyUIApp.exe `
@@ -921,12 +937,22 @@ nuitka --standalone `
 |------|------|
 | `--standalone` | 生成独立可执行文件，包含所有依赖 |
 | `--onefile` | 打包为单个 exe 文件 |
-| `--windows-disable-console` | Windows 下不显示命令行窗口 |
+| `--windows-console-mode=disable` | Windows 下不显示命令行窗口（替代已弃用的 `--disable-console`） |
 | `--include-package=comfy` | 强制包含 comfy 包 |
-| `--include-data-dir=comfyui_src=comfyui_src` | 包含 ComfyUI 源码和模型目录 |
+| `--include-package=comfy_api` | 强制包含 comfy_api 包 |
+| `--include-package=comfy_api_nodes` | 强制包含 comfy_api_nodes 包 |
+| `--include-package=comfy_config` | 强制包含 comfy_config 包 |
+| `--include-package=comfy_execution` | 强制包含 comfy_execution 包 |
+| `--include-package=comfy_extras` | 强制包含 comfy_extras 包 |
+| `--include-data-dir=comfyui_src\models=...` | 包含模型目录（用户需自行放置模型文件） |
 | `--include-data-dir=workflows=workflows` | 包含工作流文件目录 |
 | `--output-dir=dist` | 输出目录 |
 | `--output-filename=MyComfyUIApp.exe` | 输出文件名 |
+
+> **关键**：必须在运行 Nuitka 前设置 `PYTHONPATH` 指向 `comfyui_src`，否则 Nuitka 找不到 `comfy` 等包：
+> ```powershell
+> $env:PYTHONPATH = "$env:PYTHONPATH;comfyui_src"
+> ```
 
 ### 常见打包错误
 

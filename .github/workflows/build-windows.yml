@@ -26,7 +26,19 @@ jobs:
       - name: Build EXE
         shell: pwsh
         run: |
-          nuitka --standalone --onefile --windows-disable-console --include-package=comfy --include-data-dir=comfyui_src=comfyui_src --include-data-dir=workflows=workflows --output-dir=dist --output-filename=MyComfyUIApp.exe main.py
+          $env:PYTHONPATH = "$env:PYTHONPATH;comfyui_src"
+          nuitka --standalone --onefile --windows-console-mode=disable `
+            --include-package=comfy `
+            --include-package=comfy_api `
+            --include-package=comfy_api_nodes `
+            --include-package=comfy_config `
+            --include-package=comfy_execution `
+            --include-package=comfy_extras `
+            --include-data-dir=comfyui_src\models=comfyui_src\models `
+            --include-data-dir=workflows=workflows `
+            --output-dir=dist `
+            --output-filename=MyComfyUIApp.exe `
+            main.py
           if (-not (Test-Path "dist\MyComfyUIApp.exe")) {
             Write-Error "Build failed: MyComfyUIApp.exe not found in dist/"
             Get-ChildItem dist -ErrorAction SilentlyContinue
