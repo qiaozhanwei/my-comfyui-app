@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           $env:PYTHONPATH = "$env:PYTHONPATH;comfyui_src"
-          nuitka --standalone --onefile --windows-console-mode=disable `
+          nuitka --standalone --onefile --assume-yes-for-downloads --windows-console-mode=disable `
             --include-package=comfy `
             --include-package=comfy_api `
             --include-package=comfy_api_nodes `
